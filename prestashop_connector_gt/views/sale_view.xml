@@ -10,6 +10,8 @@
                 <xpath expr="//field[@name='partner_shipping_id']" position="after">
                     <field name="presta_order_ref"/>
                      <field name="to_be_exported" readonly="0"/>
+                    <field name="order_status_update"/>
+                     <field name="presta_id" readonly="0"/>
                     <field name="prestashop_order" invisible="1"/>
                     <!--<field name="shop_id"/>-->
                     <!--<field name="shop_ids" readonly="1"/>-->

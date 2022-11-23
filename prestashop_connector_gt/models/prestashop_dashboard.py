@@ -66,137 +66,137 @@ class SaleShop(models.Model):
 
 
     # @api.multi
-    def action_view_all_order(self):
-        order_obj = self.env['sale.order']
-        order_id = order_obj.search([('shop_id','=',self[0].id)])
-        imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('sale.action_orders_to_invoice')
-        list_view_id = imd.xmlid_to_res_id('sale.view_quotation_tree')
-        form_view_id = imd.xmlid_to_res_id('sale.view_order_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(order_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % order_id.ids
-#         elif len(order_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = order_id.ids[0]
-        else:
-            result = {'type': 'ir.actions.act_window_close'}
-        return result
-    
-    # @api.multi
-    def action_view_draft_order(self):
-        order_obj = self.env['sale.order']
-        order_id = order_obj.search([('shop_id','=',self[0].id),('presta_id','!=',False),('state','=','draft')])
-        imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('sale.action_orders_to_invoice')
-        list_view_id = imd.xmlid_to_res_id('sale.view_quotation_tree')
-        form_view_id = imd.xmlid_to_res_id('sale.view_order_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(order_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % order_id.ids
-#         elif len(order_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = order_id.ids[0]
-        else:
-            result = {'type': 'ir.actions.act_window_close'}
-        return result
-    
-    # @api.multi
-    def action_view_cancel_order(self):
-        order_obj = self.env['sale.order']
-        order_id = order_obj.search([('shop_id','=',self[0].id),('presta_id','!=',False),('state','=','cancel')])
-        imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('sale.action_orders_to_invoice')
-        list_view_id = imd.xmlid_to_res_id('sale.view_quotation_tree')
-        form_view_id = imd.xmlid_to_res_id('sale.view_order_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(order_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % order_id.ids
-#         elif len(order_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = order_id.ids[0]
-        else:
-            result = {'type': 'ir.actions.act_window_close'}
-        return result
-
-
-
-    # @api.multi
-    def action_view_pending_order(self):
-        order_obj = self.env['sale.order']
-        order_id = order_obj.search([('shop_id','=',self[0].id),('presta_id','!=',False),('state','in',('sale','sent'))])
-        imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('sale.action_orders_to_invoice')
-        list_view_id = imd.xmlid_to_res_id('sale.view_quotation_tree')
-        form_view_id = imd.xmlid_to_res_id('sale.view_order_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(order_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % order_id.ids
-#         elif len(order_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = order_id.ids[0]
-        else:
-            result = {'type': 'ir.actions.act_window_close'}
-        return result
-
-
-    # @api.multi
-    def action_view_complete_order(self):
-        order_obj = self.env['sale.order']
-        order_id = order_obj.search([('shop_id','=',self[0].id),('presta_id','!=',False),('state','=','done')])
-        imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('sale.action_orders_to_invoice')
-        list_view_id = imd.xmlid_to_res_id('sale.view_quotation_tree')
-        form_view_id = imd.xmlid_to_res_id('sale.view_order_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(order_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % order_id.ids
-#         elif len(order_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = order_id.ids[0]
-        else:
-            result = {'type': 'ir.actions.act_window_close'}
-        return result
+#     def action_view_all_order(self):
+#         order_obj = self.env['sale.order']
+#         order_id = order_obj.search([('shop_id','=',self[0].id)])
+#         imd = self.env['ir.model.data']
+#         action = imd._xmlid_lookup('sale.action_orders_to_invoice')
+#         list_view_id = imd.xmlid_to_res_id('sale.view_quotation_tree')
+#         form_view_id = imd.xmlid_to_res_id('sale.view_order_form')
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(order_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % order_id.ids
+# #         elif len(order_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = order_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
+#
+#     # @api.multi
+#     def action_view_draft_order(self):
+#         order_obj = self.env['sale.order']
+#         order_id = order_obj.search([('shop_id','=',self[0].id),('presta_id','!=',False),('state','=','draft')])
+#         imd = self.env['ir.model.data']
+#         action = imd._xmlid_lookup('sale.action_orders_to_invoice')
+#         list_view_id = imd.xmlid_to_res_id('sale.view_quotation_tree')
+#         form_view_id = imd.xmlid_to_res_id('sale.view_order_form')
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(order_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % order_id.ids
+# #         elif len(order_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = order_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
+#
+#     # @api.multi
+#     def action_view_cancel_order(self):
+#         order_obj = self.env['sale.order']
+#         order_id = order_obj.search([('shop_id','=',self[0].id),('presta_id','!=',False),('state','=','cancel')])
+#         imd = self.env['ir.model.data']
+#         action = imd._xmlid_lookup('sale.action_orders_to_invoice')
+#         list_view_id = imd.xmlid_to_res_id('sale.view_quotation_tree')
+#         form_view_id = imd.xmlid_to_res_id('sale.view_order_form')
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(order_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % order_id.ids
+# #         elif len(order_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = order_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
+#
+#
+#
+#     # @api.multi
+#     def action_view_pending_order(self):
+#         order_obj = self.env['sale.order']
+#         order_id = order_obj.search([('shop_id','=',self[0].id),('presta_id','!=',False),('state','in',('sale','sent'))])
+#         imd = self.env['ir.model.data']
+#         action = imd._xmlid_lookup('sale.action_orders_to_invoice')
+#         list_view_id = imd.xmlid_to_res_id('sale.view_quotation_tree')
+#         form_view_id = imd.xmlid_to_res_id('sale.view_order_form')
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(order_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % order_id.ids
+# #         elif len(order_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = order_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
+#
+#
+#     # @api.multi
+#     def action_view_complete_order(self):
+#         order_obj = self.env['sale.order']
+#         order_id = order_obj.search([('shop_id','=',self[0].id),('presta_id','!=',False),('state','=','done')])
+#         imd = self.env['ir.model.data']
+#         action = imd._xmlid_lookup('sale.action_orders_to_invoice')
+#         list_view_id = imd.xmlid_to_res_id('sale.view_quotation_tree')
+#         form_view_id = imd.xmlid_to_res_id('sale.view_order_form')
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(order_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % order_id.ids
+# #         elif len(order_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = order_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
 
 
     # @api.multi
@@ -207,26 +207,51 @@ class SaleShop(models.Model):
         origin_list = [s.name for s in all_order_ids]
         invoice_id = invoice_obj.search([('is_prestashop', '=', True), ('origin', 'in', origin_list)])
         imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('account.action_view_invoice_tree1')
-        list_view_id = imd.xmlid_to_res_id('account.view_invoice_tree')
-        form_view_id = imd.xmlid_to_res_id('account.view_move_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(invoice_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % invoice_id.ids
-#         elif len(invoice_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = invoice_id.ids[0]
+        # action = imd._xmlid_lookup('account.action_view_invoice_tree1')
+        # list_view_id = imd.xmlid_to_res_id('account.view_invoice_tree')
+        # form_view_id = imd.xmlid_to_res_id('account.view_move_form')
+
+        if len(invoice_id) > 1:
+            result = {
+                'name': ('Invoices'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'account.move',
+                'domain': "[('id','in',%s)]" % invoice_id.ids
+            }
+        elif len(invoice_id) == 1:
+            result = {
+                'name': ('Invoices'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"], [False, "form"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'account.move',
+                'domain': "[('id','in',%s)]" % invoice_id.ids
+            }
         else:
             result = {'type': 'ir.actions.act_window_close'}
         return result
+
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(invoice_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % invoice_id.ids
+# #         elif len(invoice_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = invoice_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
  
  
     # @api.multi
@@ -237,26 +262,51 @@ class SaleShop(models.Model):
         origin_list = [s.name for s in all_order_ids]
         invoice_id = invoice_obj.search([('is_prestashop', '=', True),('state','=','open'),('origin', 'in', origin_list)])
         imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('account.action_view_invoice_tree1')
-        list_view_id = imd.xmlid_to_res_id('account.view_invoice_tree')
-        form_view_id = imd.xmlid_to_res_id('account.view_move_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(invoice_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % invoice_id.ids
-#         elif len(invoice_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = invoice_id.ids[0]
+        # action = imd._xmlid_lookup('account.action_view_invoice_tree1')
+        # list_view_id = imd.xmlid_to_res_id('account.view_invoice_tree')
+        # form_view_id = imd.xmlid_to_res_id('account.view_move_form')
+
+        if len(invoice_id) > 1:
+            result = {
+                'name': ('Invoices'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'account.move',
+                'domain': "[('id','in',%s)]" % invoice_id.ids
+            }
+        elif len(invoice_id) == 1:
+            result = {
+                'name': ('Invoices'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"], [False, "form"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'account.move',
+                'domain': "[('id','in',%s)]" % invoice_id.ids
+            }
         else:
             result = {'type': 'ir.actions.act_window_close'}
         return result
+
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(invoice_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % invoice_id.ids
+# #         elif len(invoice_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = invoice_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
     
     # @api.multi
     def action_view_draft_invoice(self):
@@ -267,27 +317,52 @@ class SaleShop(models.Model):
         invoice_id = invoice_obj.search(
             [('is_prestashop', '=', True), ('state', '=', 'draft'), ('origin', 'in', origin_list)])
         imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('account.action_view_invoice_tree1')
-        list_view_id = imd.xmlid_to_res_id('account.view_invoice_tree')
-        form_view_id = imd.xmlid_to_res_id('account.view_move_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(invoice_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % invoice_id.ids
-#         elif len(invoice_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = invoice_id.ids[0]
+        # action = imd._xmlid_lookup('account.action_view_invoice_tree1')
+        # list_view_id = imd.xmlid_to_res_id('account.view_invoice_tree')
+        # form_view_id = imd.xmlid_to_res_id('account.view_move_form')
+
+        if len(invoice_id) > 1:
+            result = {
+                'name': ('Invoices'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'account.move',
+                'domain': "[('id','in',%s)]" % invoice_id.ids
+            }
+        elif len(invoice_id) == 1:
+            result = {
+                'name': ('Invoices'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"], [False, "form"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'account.move',
+                'domain': "[('id','in',%s)]" % invoice_id.ids
+            }
         else:
             result = {'type': 'ir.actions.act_window_close'}
         return result
-    
+
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(invoice_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % invoice_id.ids
+# #         elif len(invoice_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = invoice_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
+
     # @api.multi
     def action_view_cancel_invoice(self):
         order_obj = self.env['sale.order']
@@ -297,26 +372,51 @@ class SaleShop(models.Model):
         invoice_id = invoice_obj.search(
             [('is_prestashop', '=', True), ('state', '=', 'cancel'), ('origin', 'in', origin_list)])
         imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('account.action_view_invoice_tree1')
-        list_view_id = imd.xmlid_to_res_id('account.view_invoice_tree')
-        form_view_id = imd.xmlid_to_res_id('account.view_move_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(invoice_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % invoice_id.ids
-#         elif len(invoice_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = invoice_id.ids[0]
+        # action = imd._xmlid_lookup('account.action_view_invoice_tree1')
+        # list_view_id = imd.xmlid_to_res_id('account.view_invoice_tree')
+        # form_view_id = imd.xmlid_to_res_id('account.view_move_form')
+
+        if len(invoice_id) > 1:
+            result = {
+                'name': ('Invoices'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'account.move',
+                'domain': "[('id','in',%s)]" % invoice_id.ids
+            }
+        elif len(invoice_id) == 1:
+            result = {
+                'name': ('Invoices'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"], [False, "form"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'account.move',
+                'domain': "[('id','in',%s)]" % invoice_id.ids
+            }
         else:
             result = {'type': 'ir.actions.act_window_close'}
         return result
+
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(invoice_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % invoice_id.ids
+# #         elif len(invoice_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = invoice_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
  
     # @api.multi
     def action_view_complete_invoice(self):
@@ -327,26 +427,51 @@ class SaleShop(models.Model):
         invoice_id = invoice_obj.search(
             [('is_prestashop', '=', True), ('state', '=', 'paid'), ('origin', 'in', origin_list)])
         imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('account.action_view_invoice_tree1')
-        list_view_id = imd.xmlid_to_res_id('account.view_invoice_tree')
-        form_view_id = imd.xmlid_to_res_id('account.view_move_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(invoice_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % invoice_id.ids
-#         elif len(invoice_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = invoice_id.ids[0]
+        # action = imd._xmlid_lookup('account.action_view_invoice_tree1')
+        # list_view_id = imd.xmlid_to_res_id('account.view_invoice_tree')
+        # form_view_id = imd.xmlid_to_res_id('account.view_move_form')
+
+        if len(invoice_id) > 1:
+            result = {
+                'name': ('Invoices'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'account.move',
+                'domain': "[('id','in',%s)]" % invoice_id.ids
+            }
+        elif len(invoice_id) == 1:
+            result = {
+                'name': ('Invoices'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"], [False, "form"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'account.move',
+                'domain': "[('id','in',%s)]" % invoice_id.ids
+            }
         else:
             result = {'type': 'ir.actions.act_window_close'}
-        return result	
+        return result
+
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(invoice_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % invoice_id.ids
+# #         elif len(invoice_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = invoice_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
     
     
     # @api.multi
@@ -357,26 +482,52 @@ class SaleShop(models.Model):
         origin_list = [s.name for s in all_order_ids]
         stock_id = stock_obj.search([('is_presta', '=', True), ('origin', 'in', origin_list)])
         imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('stock.action_picking_tree_all')
-        list_view_id = imd.xmlid_to_res_id('stock.vpicktree')
-        form_view_id = imd.xmlid_to_res_id('stock.view_picking_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
+        # imd = self.env['ir.actions.actions']
+        # action = imd._xmlid_lookup('stock.action_picking_tree_all')
+        # list_view_id = imd._xmlid_lookup('stock.vpicktree')
+        # form_view_id = imd._xmlid_lookup('stock.view_picking_form')
+        # print('action++++++++++', action)
+        # print('stock_id++++++++++', stock_id)
+
         if len(stock_id) > 1:
-            result['domain'] = "[('id','in',%s)]" % stock_id.ids
+            result = {
+                'name': ('Transfers'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'stock.picking',
+                'domain': "[('id','in',%s)]" % stock_id.ids
+            }
         elif len(stock_id) == 1:
-            result['views'] = [(form_view_id, 'form')]
-            result['res_id'] = stock_id.ids[0]
+            result = {
+                'name': ('Transfers'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"], [False, "form"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'stock.picking',
+                'domain': "[('id','in',%s)]" % stock_id.ids
+            }
         else:
             result = {'type': 'ir.actions.act_window_close'}
         return result
+
+        # result = {
+        #     # 'name': action.name,
+        #     'help': action.help,
+        #     'type': action.type,
+        #     'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+        #     'target': action.target,
+        #     'context': action.context,
+        #     'res_model': action.res_model,
+        # }
+        # if len(stock_id) > 1:
+        #     result['domain'] = "[('id','in',%s)]" % stock_id.ids
+        # elif len(stock_id) == 1:
+        #     result['views'] = [(form_view_id, 'form')]
+        #     result['res_id'] = stock_id.ids[0]
+
     
     
     # @api.multi
@@ -387,26 +538,51 @@ class SaleShop(models.Model):
         origin_list = [s.name for s in all_order_ids]
         stock_id = stock_obj.search([('is_presta', '=', True), ('origin', 'in', origin_list),('state','in', ('confirmed', 'waiting'))])
         imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('stock.action_picking_tree_all')
-        list_view_id = imd.xmlid_to_res_id('stock.vpicktree')
-        form_view_id = imd.xmlid_to_res_id('stock.view_picking_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(stock_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % stock_id.ids
-#         elif len(stock_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = stock_id.ids[0]
+        # action = imd._xmlid_lookup('stock.action_picking_tree_all')
+        # list_view_id = imd.xmlid_to_res_id('stock.vpicktree')
+        # form_view_id = imd.xmlid_to_res_id('stock.view_picking_form')
+
+        if len(stock_id) > 1:
+            result = {
+                'name': ('Transfers'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'stock.picking',
+                'domain': "[('id','in',%s)]" % stock_id.ids
+            }
+        elif len(stock_id) == 1:
+            result = {
+                'name': ('Transfers'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"], [False, "form"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'stock.picking',
+                'domain': "[('id','in',%s)]" % stock_id.ids
+            }
         else:
             result = {'type': 'ir.actions.act_window_close'}
         return result
+
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(stock_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % stock_id.ids
+# #         elif len(stock_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = stock_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
 
 
     # @api.multi
@@ -418,26 +594,51 @@ class SaleShop(models.Model):
         stock_id = stock_obj.search([('is_presta', '=', True), ('origin', 'in', origin_list), ('state', '=', 'done')])
 
         imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('stock.action_picking_tree_all')
-        list_view_id = imd.xmlid_to_res_id('stock.vpicktree')
-        form_view_id = imd.xmlid_to_res_id('stock.view_picking_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context': action.context,
-            'res_model': action.res_model,
-        }
-        if len(stock_id) >= 1:
-            result['domain'] = "[('id','in',%s)]" % stock_id.ids
-#         elif len(stock_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = stock_id.ids[0]
+        # action = imd._xmlid_lookup('stock.action_picking_tree_all')
+        # list_view_id = imd.xmlid_to_res_id('stock.vpicktree')
+        # form_view_id = imd.xmlid_to_res_id('stock.view_picking_form')
+
+        if len(stock_id) > 1:
+            result = {
+                'name': ('Transfers'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'stock.picking',
+                'domain': "[('id','in',%s)]" % stock_id.ids
+            }
+        elif len(stock_id) == 1:
+            result = {
+                'name': ('Transfers'),
+                'type': 'ir.actions.act_window',
+                'views': [[False, "tree"], [False, "form"]],
+                'target': 'current',
+                # 'context': action.context,
+                'res_model': 'stock.picking',
+                'domain': "[('id','in',%s)]" % stock_id.ids
+            }
         else:
             result = {'type': 'ir.actions.act_window_close'}
         return result
+
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context': action.context,
+#             'res_model': action.res_model,
+#         }
+#         if len(stock_id) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % stock_id.ids
+# #         elif len(stock_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = stock_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
 
 #     @api.multi
 #     def presta_action_picking_tree_late(self):
@@ -452,7 +653,7 @@ class SaleShop(models.Model):
 #         all_stock_ids = stock_obj.search([('is_presta','=',True), ('origin', 'in', origin_list)])
 #
 #         imd = self.env['ir.model.data']
-#         action = imd.xmlid_to_object('stock.action_picking_tree_late')
+#         action = imd._xmlid_lookup('stock.action_picking_tree_late')
 #         list_view_id = imd.xmlid_to_res_id('stock.vpicktree')
 #         form_view_id = imd.xmlid_to_res_id('stock.view_picking_form')
 #         result = {
@@ -485,7 +686,7 @@ class SaleShop(models.Model):
 #         all_stock_ids = stock_obj.search([('is_presta','=',True), ('origin', 'in', origin_list)])
 #
 #         imd = self.env['ir.model.data']
-#         action = imd.xmlid_to_object('stock.action_picking_tree_backorder')
+#         action = imd._xmlid_lookup('stock.action_picking_tree_backorder')
 #         list_view_id = imd.xmlid_to_res_id('stock.vpicktree')
 #         form_view_id = imd.xmlid_to_res_id('stock.view_picking_form')
 #         result = {
@@ -509,36 +710,36 @@ class SaleShop(models.Model):
     
     
     # @api.multi
-    def presta_action_picking_tree_waiting(self):
-        shop_obj = self.env['sale.shop']
-        order_obj =self.env['sale.order']
-        stock_obj = self.env['stock.picking']
-        shop_id  = shop_obj.search([('prestashop_instance_id','=',self.id)])
-        all_order_ids = order_obj.search([('shop_id','=',shop_id.id)])
-        origin_list = [s.name for s in all_order_ids] 
-        all_stock_ids = stock_obj.search([('is_presta','=',True), ('origin', 'in', origin_list)])
-    
-        imd = self.env['ir.model.data']
-        action = imd.xmlid_to_object('stock.action_picking_tree_waiting')
-        list_view_id = imd.xmlid_to_res_id('stock.vpicktree')
-        form_view_id = imd.xmlid_to_res_id('stock.view_picking_form')
-        result = {
-            'name': action.name,
-            'help': action.help,
-            'type': action.type,
-            'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
-            'target': action.target,
-            'context':{'search_default_waiting': 1,},
-            'res_model': action.res_model,
-        }
-        if len(all_stock_ids) >= 1:
-            result['domain'] = "[('id','in',%s)]" % all_stock_ids.ids
-#         elif len(stock_id) == 1:
-#             result['views'] = [(form_view_id, 'form')]
-#             result['res_id'] = stock_id.ids[0]
-        else:
-            result = {'type': 'ir.actions.act_window_close'}
-        return result
+#     def presta_action_picking_tree_waiting(self):
+#         shop_obj = self.env['sale.shop']
+#         order_obj =self.env['sale.order']
+#         stock_obj = self.env['stock.picking']
+#         shop_id  = shop_obj.search([('prestashop_instance_id','=',self.id)])
+#         all_order_ids = order_obj.search([('shop_id','=',shop_id.id)])
+#         origin_list = [s.name for s in all_order_ids]
+#         all_stock_ids = stock_obj.search([('is_presta','=',True), ('origin', 'in', origin_list)])
+#
+#         imd = self.env['ir.model.data']
+#         action = imd._xmlid_lookup('stock.action_picking_tree_waiting')
+#         list_view_id = imd.xmlid_to_res_id('stock.vpicktree')
+#         form_view_id = imd.xmlid_to_res_id('stock.view_picking_form')
+#         result = {
+#             'name': action.name,
+#             'help': action.help,
+#             'type': action.type,
+#             'views': [[list_view_id, 'tree'], [form_view_id, 'form'], [False, 'kanban'], [False, 'pivot']],
+#             'target': action.target,
+#             'context':{'search_default_waiting': 1,},
+#             'res_model': action.res_model,
+#         }
+#         if len(all_stock_ids) >= 1:
+#             result['domain'] = "[('id','in',%s)]" % all_stock_ids.ids
+# #         elif len(stock_id) == 1:
+# #             result['views'] = [(form_view_id, 'form')]
+# #             result['res_id'] = stock_id.ids[0]
+#         else:
+#             result = {'type': 'ir.actions.act_window_close'}
+#         return result
 
 
     

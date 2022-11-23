@@ -54,7 +54,7 @@
 						<field name="export_presta_products"/>
 						<field name="export_presta_products_variants"/>
 						<field name="export_presta_product_inventory"/>
-						<field name="export_presta_orders"/>
+<!--						<field name="export_presta_orders"/>-->
 					</group>
 				</group>
 				<footer>

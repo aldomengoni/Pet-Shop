@@ -8,7 +8,7 @@
                 <field name="presta_kanban_dashboard"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="#{kanban_color(0)}">
+                        <div t-attf-class="#{kanban_color(0)}" style="width:450px;">
                             <t t-value="JSON.parse(record.presta_kanban_dashboard.raw_value)" t-set="dashboard"/>
 	                        <div class="o_kanban_card_header">
                                 <div class="o_kanban_card_header_title">

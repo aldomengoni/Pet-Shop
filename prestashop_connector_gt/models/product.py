@@ -24,6 +24,7 @@ import datetime
 from odoo.tools.translate import _
 import psycopg2
 from odoo.tools.translate import html_translate
+from datetime import timedelta, datetime, date, time
 
 
 class product_template(models.Model):
@@ -61,6 +62,18 @@ class product_template(models.Model):
     product_to_be_exported = fields.Boolean(string="Product to be exported?")
     sku = fields.Char(string="SKU")
 
+    product_to_be_updated = fields.Boolean('To be Updated')
+
+    def write(self, vals):
+        print('self+++++++++++++', self)
+        print('vals+++++++++++++', vals)
+        self_id = self.id
+        res = super(product_template, self).write(vals)
+        curent_date = datetime.now()
+        query = "UPDATE product_template SET write_date='%s' where id = %s" % (curent_date, self_id)
+        self.env.cr.execute(query)
+        print('write done')
+
     # Ganesh code
     # x_etapa_de_vida = fields.Selection(
     #     [('Cachorro', 'Cachorro'), ('Adulto', 'Adulto'), ('Senior', 'Senior'), ('Todos', 'Todos')],
@@ -80,11 +93,6 @@ class product_template(models.Model):
     # x_influencer_3 = fields.Char('Influencer 3')
 
     product_spec_ids = fields.One2many('product.spec', 'product_tmpl_id', 'Specification')
-
-
-
-
-
 
     # @api.multi
     def get_product_shop_count(self):
@@ -195,7 +203,7 @@ class product_category(models.Model):
     sequence = fields.Integer('Sequence', default=1, help="Assigns the priority to the list of product Category.")
     write_date = fields.Datetime(string="Write Date")
     is_presta = fields.Boolean("Is Prestashop")
-    active = fields.Boolean("Active")
+    active = fields.Boolean("Active", default=True)
     friendly_url = fields.Char("Friendly URL")
     meta_title = fields.Char("Meta Title", size=70)
     meta_description = fields.Text("Meta description", )

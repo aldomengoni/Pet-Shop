@@ -30,6 +30,7 @@
                                 <field name="wholesale_price"/>
                                 <field name="presta_id"/>
                                 <field name="manufacturer_id" domain="[('manufacturer','=',True)]"/>
+
                                 <!--<group>-->
                                 <!--<field name="product_description" readonly="1"/>-->
                                 <!--</group>-->
@@ -76,31 +77,36 @@
                     <field name="categ_id" domain="[('presta_id','!=',True)]"/>
                 </xpath>
 
+                <xpath expr="//sheet/notebook/page[@name='general_information']/group/group[@name='group_general']/field[@name='detailed_type']"
+                       position="after">
+                    <field name='product_to_be_updated'/>
+                </xpath>
 
-<!--                <xpath expr="//sheet/notebook/page[@name='general_information']/group/group[@name='group_general']/field[@name='uom_po_id']"-->
-<!--                       position="after">-->
-<!--                    <field name="x_etapa_de_vida"/>-->
-<!--                    <field name="x_tamano_de_raza"/>-->
-<!--                    <field name="x_peso_de_mascota"/>-->
-<!--                    <field name="x_influencer_1"/>-->
-<!--                    <field name="x_influencer_2"/>-->
-<!--                    <field name="x_influencer_3"/>-->
-<!--                </xpath>-->
 
-<!--                <xpath expr="//sheet/notebook/page[@name='general_information']/group/group[@name='group_standard_price']/field[@name='categ_id']"-->
-<!--                       position="after">-->
-<!--                    <field name="x_entrega_en_tienda"/>-->
-<!--                    <field name="x_delivery_mismo_dia"/>-->
-<!--                    <field name="x_delivery_programado"/>-->
-<!--                    <field name="x_suscripcion"/>-->
-<!--                </xpath>-->
+                <!--                <xpath expr="//sheet/notebook/page[@name='general_information']/group/group[@name='group_general']/field[@name='uom_po_id']"-->
+                <!--                       position="after">-->
+                <!--                    <field name="x_etapa_de_vida"/>-->
+                <!--                    <field name="x_tamano_de_raza"/>-->
+                <!--                    <field name="x_peso_de_mascota"/>-->
+                <!--                    <field name="x_influencer_1"/>-->
+                <!--                    <field name="x_influencer_2"/>-->
+                <!--                    <field name="x_influencer_3"/>-->
+                <!--                </xpath>-->
+
+                <!--                <xpath expr="//sheet/notebook/page[@name='general_information']/group/group[@name='group_standard_price']/field[@name='categ_id']"-->
+                <!--                       position="after">-->
+                <!--                    <field name="x_entrega_en_tienda"/>-->
+                <!--                    <field name="x_delivery_mismo_dia"/>-->
+                <!--                    <field name="x_delivery_programado"/>-->
+                <!--                    <field name="x_suscripcion"/>-->
+                <!--                </xpath>-->
 
                 <xpath expr="//page[@name='general_information']" position="after">
                     <page name="product_spec" string="Specifications">
                         <field name="product_spec_ids">
                             <tree editable="bottom">
                                 <field name="feature" required="1"/>
-<!--                                <field name="feature_value"/>-->
+                                <!--                                <field name="feature_value"/>-->
                                 <field name="feature_value" domain="[('feature_id','=',feature)]" required="1"
                                        context="{'default_feature':feature}"/>
                             </tree>
@@ -538,7 +544,8 @@
                         <field name="presta_id"/>
                         <field name="shop_ids" widget="many2many_tags"/>
                         <field name="to_be_exported"/>
-                        <field name="friendly_url" attrs="{'required':[('is_presta','=', True)]}"/>
+                        <field name="friendly_url"/>
+                        <!--                        <field name="friendly_url" attrs="{'required':[('is_presta','=', True)]}"/>-->
                         <field name="meta_title"/>
                         <field name="meta_description"/>
                         <field name="is_presta" invisible="1"/>

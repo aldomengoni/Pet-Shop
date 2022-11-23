@@ -1,5 +1,6 @@
 import time
 #from openerp.addons.prestashop_connector_gt.prestashop_api import amazonerp_osv as amazon_api_obj
+
 from odoo import api, fields, models, _
 
 
@@ -17,7 +18,7 @@ class PrestashopConnectorWizard(models.Model):
     
     shop_ids = fields.Many2many('sale.shop', string="Select Shops")
     #import fields
-    import_orders = fields.Boolean('Import Orders')
+    import_orders = fields.Boolean('Import Orders.')
     import_country_state = fields.Boolean('Import Country/State')
     last_order_import_date = fields.Datetime('Last presta order Import Date')
     import_products = fields.Boolean('Import Products')
@@ -69,7 +70,6 @@ class PrestashopConnectorWizard(models.Model):
     # @api.one
     def import_prestashop(self):
         shop_ids=self.shop_ids
-
         if self.import_product_attributes:
             for shop_id in shop_ids:
                 shop_id.import_product_attributes()
@@ -114,9 +114,18 @@ class PrestashopConnectorWizard(models.Model):
                 shop_id.import_carriers()
                 
         if self.import_orders:
+            order_ids = []
+            sale_orders = []
             for shop_id in shop_ids:
-                shop_id.with_context({'last_order_import_date': str(self.last_order_import_date)}).import_orders()
-        
+                res = shop_id.with_context({'last_order_import_date': str(self.last_order_import_date), 'from_wizard':True}).import_orders()
+                if isinstance(res, list):
+                    order_ids += res
+            if order_ids:
+                sale_orders = self.env['sale.order'].search([('presta_id', 'in', order_ids)])
+            if sale_orders:
+                action = self.env["ir.actions.actions"]._for_xml_id("prestashop_connector_gt.inherit_action_quotations")
+                action['domain'] = [('id', 'in', sale_orders.ids)]
+                return action
         if self.import_messages:
             for shop_id in shop_ids:
                 shop_id.import_messages()
@@ -169,9 +178,6 @@ class PrestashopConnectorWizard(models.Model):
 
         if self.update_presta_product_inventory:
             self.shop_ids.update_presta_product_inventory()
-
-        if self.update_order_status:
-            self.shop_ids.update_order_status()
 
         if self.export_presta_customers:
             self.shop_ids.export_presta_customers()
